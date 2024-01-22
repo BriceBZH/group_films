@@ -1,9 +1,9 @@
 <?php
-    if(isset($_GET['id'])) {
-        $idUser = $_GET['id'];
+    if(isset($_GET['idFilm'])) {
+        $idFilm = $_GET['id'];
         $query = $db->prepare('SELECT * FROM Films WHERE id = :id');
         $parameters = [
-        'id' => $idUser
+        'idFilm' => $idFilm
     	];
         $query->execute($parameters);
         $film = $query->fetch(PDO::FETCH_ASSOC);
