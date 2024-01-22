@@ -1,11 +1,11 @@
 <?php
 $host = "db.3wa.io";
 $port = "3306";
-$dbname = "bricerubeaux_phpj5";
-$connexionString = "mysql:host=$host;port=$port;dbname=$dbname";
+$dbname = "jeanlouisjean_groupe4_les films";
+$connexionString = "mysql:host=$host;port=$port;dbname=$dbname;charset=utf8";
 
-$user = "bricerubeaux";
-$password = "dfcef705866daf59347bbd9795fbe016";
+$user = "jeanlouisjean";
+$password = "22d18cb47bce6a70993e6a4ea2e4eb40";
 
 $db = new PDO(
     $connexionString,
