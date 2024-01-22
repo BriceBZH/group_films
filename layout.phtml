@@ -12,30 +12,27 @@
     </head>
     <body class="container-fluid">
 
-  <?php require "templates/header.phtml"; ?>
+  <?php  ?>
 
     <?php
-        
-        if($route === "create-user") 
-    {
-        require "templates/inscription.phtml";
-    } 
-        else if($route === "edit-user") 
-        {
-    
-        //require "templates/edit-user.phtml";
-    } 
-        else if($route === "show-user") 
-    {
-    
-        //require "templates/show-user.phtml";
-    } 
-        else 
-    {
-        //require "templates/list-users.phtml";
-        require "templates/connexion.phtml";
-    }
-    
+        if(empty($_SESSION)) {
+            if($route === "inscription") {
+                require "templates/inscription.phtml";
+            } else {
+                require "templates/connexion.phtml";
+            }
+        } else {
+            require "templates/header.phtml";
+            if($route === "show-film") {
+                require "templates/show-film.phtml";
+            } else if($route === "edit-film") {
+                require "templates/edit-film.phtml";
+            } else if($route === "administration") {
+                require "templates/administration.phtml";
+            } else {
+                require "templates/films.phtml";
+            }
+        }
     ?>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

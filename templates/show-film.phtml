@@ -1,9 +1,9 @@
 <?php
-    if(isset($_GET['idFilm'])) {
+    if(isset($_GET['id'])) {
         $idFilm = $_GET['id'];
-        $query = $db->prepare('SELECT * FROM Films WHERE id = :id');
+        $query = $db->prepare('SELECT Films.titre, Films.description, Categories.type FROM Films JOIN Categories ON Films.idCateg = Categories.id WHERE Films.id = :id');
         $parameters = [
-        'idFilm' => $idFilm
+        'id' => $idFilm
     	];
         $query->execute($parameters);
         $film = $query->fetch(PDO::FETCH_ASSOC);
@@ -12,12 +12,17 @@
 <main class="container py-5">
     <h1>
         <?php 
-            echo $user['first_name']." ".$user['last_name'];
+            echo $film['titre'];
         ?>
     </h1>
     <h2>
         <?php 
-            echo $user['email'];
+            echo $film['description'];
         ?>
     </h2>
+    <h3>
+        <?php 
+            echo $film['type'];
+        ?>
+    </h3>
 </main>

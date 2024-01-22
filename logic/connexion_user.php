@@ -17,20 +17,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     $password = $_POST['password'];
     $hash = password_hash($password, PASSWORD_DEFAULT);
     
-    $query = "SELECT * FROM  Users WHERE pseudo = :pseudo"; 
-    $statement->bindParam(':pseudo', $pseudo);
-    $statement->execute();
-    $pseudo = $statement->fetch();
-    $_SESSION['idUser'] = $user['id'];
-    
-     if (!empty($pseudo) && password_verify($password, $pseudo['password'])) 
-     {
+    $query = $db->prepare("SELECT * FROM  Users WHERE pseudo = :pseudo"); 
+    $parameters = [
+    'pseudo' => $pseudo,
+	];
+    $query->execute($parameters);
+    $data = $query->fetch(PDO::FETCH_ASSOC);
+    $isPasswordCorrect = password_verify($password, $data['password']);
+    print_r($data);
+    echo $isPasswordCorrect;
+    if (!empty($data) && $isPasswordCorrect === true) {
         // si l'authentification réussie, enregistre l'utilisateur dans la session
-        $_SESSION['pseudo'] = $pesudo['pseudo'];
-        $_SESSION['idUser'] = $pseudo['id'];
-     }
+        $_SESSION['pseudo'] = $data['pseudo'];
+        $_SESSION['idUser'] = $data['id'];
+        $_SESSION['admin'] = $data['admin'];
+    }
+    print_r($_SESSION);
 }
 header('Location: ../index.php');
-?>
-
-

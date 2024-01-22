@@ -8,6 +8,8 @@ if(isset($_GET["route"]))
 {
     $route = $_GET["route"];
 }
-$idUser = 1; //a voir session
+if(!empty($_SESSION['idUser'])) {
+    $idUser = $_SESSION['idUser'];
+}
 
 require "layout.phtml";
