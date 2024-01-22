@@ -1,0 +1,111 @@
+<?php
+    //liste des films avec les catégories
+    $query = $db->prepare('SELECT Films.titre, Films.duree, Films.description, Categories.type, Films.id FROM Films JOIN Categories ON Films.idCateg = Categories.id');
+    $query->execute();
+    $films = $query->fetchAll(PDO::FETCH_ASSOC);
+?>
+<main class="container py-5">
+    <h1>
+        Liste des films
+    </h1>
+    <table class="my-5 table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    Titre
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Durée (en minutes)
+                </th>
+                <th>
+                    Catégorie
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+                foreach($films as $film => $valeur) {
+                    ?>
+                    <tr>
+                        <td>
+                            #
+                        </td>
+                        <td>
+                            <?php
+                                echo $valeur['titre'];
+                            ?>
+                        </td>
+                        <td>
+                            <?php
+                                echo $valeur['description'];
+                            ?>
+                        </td>
+                        <td>
+                            <?php
+                                echo $valeur['duree'];
+                            ?>
+                        </td>
+                        <td>
+                            <?php
+                                echo $valeur['type'];
+                            ?>
+                        </td>
+                        <td>
+                            <?php
+                                //on regarde si le user à vu le film (présence ou pas dans la table User_Film)
+                                $query = $db->prepare('SELECT * FROM User_Film WHERE idFilm = :idFilm AND idUser = :idUser');
+                                $parameters = [
+                                    'idFilm' => $valeur['id'],
+                                    'idUser' => $idUser
+                                ];
+                                $query->execute($parameters);
+                                $vu = $query->fetch(PDO::FETCH_ASSOC);
+                                if(!empty($vu)) { //entrée absente de la table User_Film
+                                    ?>
+                                    <a href="logic/film-non-vu.php?idUser=<?php echo $idUser ?>&idFilm=<?php echo $valeur['id'] ?>" class="btn btn-primary"><scan class="bi-eye-fill"></scan></a>
+                                    <?php
+                                } else {
+                                    ?>
+                                    <a href="logic/film-vu.php?idUser=<?php echo $idUser ?>&idFilm=<?php echo $valeur['id'] ?>" class="btn btn-success"><scan class="bi bi-eye-slash"></scan></a>
+                                    <?php
+                                }
+                            ?> 
+                        </td>
+                    </tr>
+                    <?php
+                }
+            ?>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    Titre
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Durée (en minutes)
+                </th>
+                <th>
+                    Catégorie
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+        </tfoot>
+    </table>
+</main>

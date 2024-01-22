@@ -1,0 +1,23 @@
+<?php
+    if(isset($_GET['idFilm'])) {
+        $idFilm = $_GET['id'];
+        $query = $db->prepare('SELECT * FROM Films WHERE id = :id');
+        $parameters = [
+        'idFilm' => $idFilm
+    	];
+        $query->execute($parameters);
+        $film = $query->fetch(PDO::FETCH_ASSOC);
+    }
+?>
+<main class="container py-5">
+    <h1>
+        <?php 
+            echo $user['first_name']." ".$user['last_name'];
+        ?>
+    </h1>
+    <h2>
+        <?php 
+            echo $user['email'];
+        ?>
+    </h2>
+</main>

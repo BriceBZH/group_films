@@ -1,0 +1,30 @@
+<?php
+
+
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+
+  
+    $query = $db->prepare('SELECT * FROM Users WHERE id = :id');
+    $query->execute(['id' => $id]);
+    $user = $query->fetch(PDO::FETCH_ASSOC);
+
+if ($user) {
+    ?>
+    <main class="container py-5 text-center">
+        <h1><?= $user["id"] ?> <?= $user["pseudo"] ?></h1>
+        <h2><?= $user["password"] ?></h2>
+    </main>
+    <?php
+}
+}else
+{
+    ?>
+    <main class="container py-5 text-center">
+        <h1>Utilisateur inconnu</h1>
+    </main>
+<?php
+}
+
+?>
+
