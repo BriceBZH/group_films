@@ -12,3 +12,4 @@ $db = new PDO(
     $user,
     $password
 );
+session_start();
