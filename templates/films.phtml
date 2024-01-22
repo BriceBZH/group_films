@@ -1,6 +1,6 @@
 <?php
     //liste des films avec les catégories
-    $query = $db->prepare('SELECT Films.titre, Films.duree, Films.description, Categories.type FROM Films JOIN Categories ON Films.idCateg = Categories.id');
+    $query = $db->prepare('SELECT Films.titre, Films.duree, Films.description, Categories.type, Films.id FROM Films JOIN Categories ON Films.idCateg = Categories.id');
     $query->execute();
     $films = $query->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -62,12 +62,23 @@
                         <td>
                             <?php
                                 //on regarde si le user à vu le film (présence ou pas dans la table User_Film)
-                                $query = $db->prepare('SELECT films.titre, films.duree, films.description, categories.type FROM films JOIN categories ON films.idCateg = categories.id');
-                                $query->execute();
-                                $films = $query->fetchAll(PDO::FETCH_ASSOC);
-                            ?>
-                            <a href="index.php?route=show-user&id=" class="btn btn-primary"><scan class="bi-eye-fill"></scan></a>
-                            <a href="index.php?route=edit-user&id=" class="btn btn-success"><scan class="bi bi-eye-slash"></scan></a>
+                                $query = $db->prepare('SELECT * FROM User_Film WHERE idFilm = :idFilm AND idUser = :idUser');
+                                $parameters = [
+                                    'idFilm' => $valeur['id'],
+                                    'idUser' => $idUser
+                                ];
+                                $query->execute($parameters);
+                                $vu = $query->fetch(PDO::FETCH_ASSOC);
+                                if(!empty($vu)) { //entrée absente de la table User_Film
+                                    ?>
+                                    <a href="logic/film-non-vu.php?idUser=<?php echo $idUser ?>&idFilm=<?php echo $valeur['id'] ?>" class="btn btn-primary"><scan class="bi-eye-fill"></scan></a>
+                                    <?php
+                                } else {
+                                    ?>
+                                    <a href="logic/film-vu.php?idUser=<?php echo $idUser ?>&idFilm=<?php echo $valeur['id'] ?>" class="btn btn-success"><scan class="bi bi-eye-slash"></scan></a>
+                                    <?php
+                                }
+                            ?> 
                         </td>
                     </tr>
                     <?php
