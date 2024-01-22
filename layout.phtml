@@ -13,24 +13,17 @@
     <body class="container-fluid">
 
     <?php
-
-    /*if($route === "create-user")
-    {
-        require "templates/create-user.phtml";
+    
+    if($route === "create-user") {
+        require "templates/administration.phtml";
+    } else if($route === "edit-user") {
+        //require "templates/edit-user.phtml";
+    } else if($route === "show-user") {
+        //require "templates/show-user.phtml";
+    } else {
+        //require "templates/list-users.phtml";
+        require "templates/administration.phtml";
     }
-    else if($route === "edit-user")
-    {
-        require "templates/edit-user.phtml";
-    }
-    else if($route === "show-user")
-    {
-        require "templates/show-user.phtml";
-    }
-    else
-    {
-        require "templates/list-users.phtml";
-    }*/
-
     ?>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
