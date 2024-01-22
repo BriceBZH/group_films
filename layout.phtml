@@ -14,22 +14,16 @@
 
     <?php
 
-    /*if($route === "create-user")
-    {
-        require "templates/create-user.phtml";
+    if($route === "create-user") {
+        require "templates/inscription.phtml";
+    } else if($route === "edit-user") {
+        //require "templates/edit-user.phtml";
+    } else if($route === "show-user") {
+        //require "templates/show-user.phtml";
+    } else {
+        //require "templates/list-users.phtml";
+        require "templates/films.phtml";
     }
-    else if($route === "edit-user")
-    {
-        require "templates/edit-user.phtml";
-    }
-    else if($route === "show-user")
-    {
-        require "templates/show-user.phtml";
-    }
-    else
-    {
-        require "templates/list-users.phtml";
-    }*/
 
     ?>
 
