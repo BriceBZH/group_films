@@ -1,6 +1,7 @@
 <?php
 $host = "localhost";
 $port = "3306";
+
 $dbname = "adangilbert_groups_films";
 $connexionString = "mysql:host=$host;port=$port;dbname=$dbname;charset=utf8";
 
@@ -13,3 +14,4 @@ $db = new PDO(
     $user,
     $password
 );
+session_start();
